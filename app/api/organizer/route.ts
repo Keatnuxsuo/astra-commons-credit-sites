@@ -1,0 +1,4 @@
+import {organizer,ready,json,safely,claimsOpen,sameOrigin,body,HttpError} from '@/lib/server';
+export const dynamic='force-dynamic';
+export async function GET(){return safely(async()=>{await organizer();const d=await ready();const rows=await d.prepare('SELECT g.id,g.name,g.email,r.issued_at FROM guests g JOIN reward_pairs r ON r.id=g.pair_id ORDER BY g.name COLLATE NOCASE').all();return json({open:await claimsOpen(),guests:rows.results});});}
+export async function POST(request:Request){return safely(async()=>{sameOrigin(request);await organizer();const d=await ready();const b=await body(request);if(typeof b.open!=='boolean')throw new HttpError(400,'Choose open or paused.');await d.prepare("UPDATE settings SET value=? WHERE key='claims_open'").bind(String(b.open)).run();return json({open:b.open});});}

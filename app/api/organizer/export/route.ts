@@ -1,0 +1,4 @@
+import {organizer,ready,safely} from '@/lib/server';
+import {csvCell} from '@/lib/validation';
+export const dynamic='force-dynamic';
+export async function GET(){return safely(async()=>{await organizer();const d=await ready();const {results}=await d.prepare('SELECT g.name,g.email,r.issued_at FROM guests g JOIN reward_pairs r ON r.id=g.pair_id ORDER BY g.name COLLATE NOCASE').all<{name:string;email:string;issued_at:string|null}>();const lines=[['Name','Email','Status','Issued at (UTC)','API value (USD)','Codex credits'],...results.map(g=>[g.name,g.email,g.issued_at?'Issued':'Reserved',g.issued_at||'',50,2500])];return new Response('\uFEFF'+lines.map(row=>row.map(csvCell).join(',')).join('\r\n'),{headers:{'Content-Type':'text/csv; charset=utf-8','Content-Disposition':'attachment; filename="astra-commons-claims.csv"','Cache-Control':'no-store, private'}});});}
