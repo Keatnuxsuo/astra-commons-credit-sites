@@ -9,6 +9,6 @@ const rewards = guests.map((_, i) => ({
   codexUrl: `https://chatgpt.com/codex/p/DEMO${String(i + 1).padStart(12, '0')}`,
 }));
 writeFileSync(new URL('../.dev.vars', import.meta.url),
-  `ORGANIZER_EMAIL=seedy@sites.test\nEVENT_SEED_JSON=${JSON.stringify(JSON.stringify({ guests, rewards }))}\n`,
+  `ORGANIZER_EMAIL=seedy@sites.test\nEVENT_SEED_JSON='${JSON.stringify({ guests, rewards })}'\n`,
   { flag: 'wx', mode: 0o600 });
 console.log('Created ignored .dev.vars with 65 synthetic attendees and fake credit pairs. Existing files are never overwritten.');
