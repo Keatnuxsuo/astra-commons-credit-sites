@@ -2,6 +2,8 @@
 
 An interactive event credit-redemption site built with React, Three.js, Vinext, Cloudflare Workers and D1. Visitors explore the Astra galaxy, hold the core to ignite it, then enter their registration details to reveal their assigned API and Codex credits.
 
+![Astra Commons landing page with an interactive spiral galaxy and Explore Astra button](docs/images/astra-commons-preview.jpg)
+
 This is a source-only sharing copy. It contains no attendee CSVs, real credit codes, production database, runtime secrets, or original Site project ID. Its Git history starts with this sanitized snapshot.
 
 ## Run locally
